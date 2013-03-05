@@ -1,0 +1,6 @@
+cache-days: 30
+mysql:
+  url: host
+  db: db
+  user: user
+  pass: pass
