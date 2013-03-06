@@ -10,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BanLogger extends JavaPlugin {
     public static BanLogger plugin;
-    public static LoggerMethods lib;
     public final Logger logger = Logger.getLogger("Minecraft");
     
     @Override
@@ -34,13 +33,13 @@ public class BanLogger extends JavaPlugin {
         }
         
         if(commandLabel.equalsIgnoreCase("log")){
-            if(args.length == 0){ return lib.showHelp(player, 1); }
+            if(args.length == 0){ return showHelp(player, 1); }
             
             if(args.length == 1){
                 if(args[0].equalsIgnoreCase("see")){  }
                 if(args[0].equalsIgnoreCase("read")){  }
-                if(args[0].equalsIgnoreCase("?") | args[0].equalsIgnoreCase("help")){ return lib.showHelp(player, 1); }
-                if(lib.isInt(args[0])){ return lib.showHelp(player, Integer.parseInt(args[0])); }
+                if(args[0].equalsIgnoreCase("?") | args[0].equalsIgnoreCase("help")){ return showHelp(player, 1); }
+                if(isInt(args[0])){ return showHelp(player, Integer.parseInt(args[0])); }
                 return false;
             }
             
@@ -57,5 +56,33 @@ public class BanLogger extends JavaPlugin {
         }
         
         return false;
+    }
+    
+    public boolean isInt(String str){
+        try{
+            Integer.parseInt(str);
+            return true;
+        }catch(NumberFormatException e){
+            return false;
+        }
+    }
+    
+    public boolean showHelp(CommandSender player, Integer page){
+        player.sendMessage(ChatColor.GOLD + "[BanLogger]" + ChatColor.RESET + " Showing help page " + page + "/2:");
+        if(page == 1){
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log #" + ChatColor.RESET + ", Show the #'th page of help.");
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log see" + ChatColor.RESET + ", Show the last " + this.getConfig().getInt("cache-days") + " days of logs.");
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log see last #" + ChatColor.RESET + ", Show the last # days of logs.");
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log see <user>" + ChatColor.RESET + ", Show the last " + this.getConfig().getInt("cache-days") + " days of user's logs.");
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log see <user> #" + ChatColor.RESET + ", Show the last # days of user's logs.");
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log remove #" + ChatColor.RESET + ", Remove log entry #. (Does not undo the action)");
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log post <msg>" + ChatColor.RESET + ", Post a message to all other administrators.");
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log read" + ChatColor.RESET + ", Show all messages. (Messages deleted after " + this.getConfig().getInt("cache-days") + " days)");
+        }else if(page==2){
+            String stuff = "";
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log <action> <user> <reason>" + ChatColor.RESET + ", Log action for reason to user.");
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RESET + "Possible Actions: " + stuff);
+        }
+        return true;
     }
 }

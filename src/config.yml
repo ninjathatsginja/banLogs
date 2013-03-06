@@ -1,0 +1,8 @@
+cache-days: 30
+db:
+  h: host
+  u: user
+  p: pass
+actions:
+  kick: /kick @u @r
+  ban: /ban @u @r
