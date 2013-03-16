@@ -23,6 +23,7 @@ public class BanLogger extends JavaPlugin {
     public void onEnable(){
         PluginDescriptionFile pdfFile = this.getDescription();
         this.logger.info(pdfFile.getName() + " " + pdfFile.getVersion() + " was enabled.");
+        this.saveDefaultConfig();
     }
     
     @Override
@@ -79,9 +80,13 @@ public class BanLogger extends JavaPlugin {
             player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log post <msg>" + ChatColor.RESET + ", Post a message to all other administrators.");
             player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log read" + ChatColor.RESET + ", Show all messages. (Messages deleted after " + this.getConfig().getInt("cache-days") + " days)");
         }else if(page==2){
-            String stuff = "";
+            String actions = "";
+            for(String key : this.getConfig().getConfigurationSection("actions").getKeys(false)){
+                actions = actions + ", " + key;
+            }
+            
             player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RED + "/log <action> <user> <reason>" + ChatColor.RESET + ", Log action for reason to user.");
-            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RESET + "Possible Actions: " + stuff);
+            player.sendMessage(ChatColor.GOLD + ">> " + ChatColor.RESET + "Possible Actions: " + actions);
         }
         return true;
     }
