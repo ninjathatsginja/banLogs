@@ -1,6 +1,7 @@
 cache-days: 30
 db:
   h: host
+  d: database
   u: user
   p: pass
 actions:

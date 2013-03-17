@@ -4,7 +4,7 @@ version: 0.1
 
 commands:
   log:
-    description: The BanLogger command. For help type /log by itself
+    description: The BanLogger command. For help type /log ?
     usage: /log ?
     permssion: banLogger.use
     permission-message: You don't have the required permissions to use BanLogger.
